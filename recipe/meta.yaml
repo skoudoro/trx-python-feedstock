@@ -1,18 +1,18 @@
 {% set name = "trx-python" %}
-{% set version = "0.3" %}
+{% set version = "0.4.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
-  sha256: 193e3282eaf03610c7e1b848aec04ddb9498fad3a7b684b30ca358e06751fbfd
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
+  sha256: 264e25d57dd98ead71a009a2e35a8143c98ff5b32fcabce7464a9d1a8c88195d
 
 build:
   skip: true  # [py<38]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
+  number: 0
 
 requirements:
   build:
