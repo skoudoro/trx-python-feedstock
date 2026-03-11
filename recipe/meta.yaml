@@ -1,42 +1,37 @@
 {% set name = "trx-python" %}
-{% set version = "0.3" %}
+{% set version = "0.4.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
-  sha256: 193e3282eaf03610c7e1b848aec04ddb9498fad3a7b684b30ca358e06751fbfd
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
+  sha256: 264e25d57dd98ead71a009a2e35a8143c98ff5b32fcabce7464a9d1a8c88195d
 
 build:
-  skip: true  # [py<38]
+  skip: true  # [py<311]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
+  number: 0
+  script_env:
+    - SETUPTOOLS_SCM_PRETEND_VERSION={{ version }}
 
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - cython                                 # [build_platform != target_platform]
-    - python                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - cython                                 # [build_platform != target_platform]
   host:
     - python
-    - setuptools >=42.0
+    - setuptools >=64
     - wheel
-    - setuptools-scm >=3.4
-    - setuptools_scm_git_archive
-    - packaging >=19.0
-    - cython >=0.29
+    - setuptools-scm >=7
     - pip
   run:
     - python
-    - setuptools-scm
     - deepdiff
     - nibabel >=5
     - numpy >=1.22
+    - typer >=0.9
 
 test:
   imports:
